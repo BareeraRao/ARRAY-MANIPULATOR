@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Manipulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Array Manipulator</h1>
+
+        <!-- Input Section to Create Array -->
+        <div class="input-group">
+            <label for="createArrayInput">Create Array (comma-separated):</label>
+            <input type="text" id="createArrayInput" placeholder="E.g., 3, 5, 8, 1, 4">
+        </div>
+
+        <!-- Create Array Button -->
+        <button onclick="createArray()">Create Array</button>
+
+        <!-- Action Buttons for Array Manipulation -->
+        <div class="input-group">
+            <label for="arrayInput">Enter Element:</label>
+            <input type="text" id="arrayInput" placeholder="Enter Element">
+        </div>
+        <button onclick="pushElement()">Push Element</button>
+        <button onclick="popElement()">Pop Element</button>
+        <button onclick="unshiftElement()">Unshift Element</button>
+        <button onclick="shiftElement()">Shift Element</button>
+        <button onclick="sliceArray()">Slice Array</button>
+        <button onclick="spliceArray()">Splice Array</button>
+
+        <!-- Output Section -->
+        <div id="result">
+            <h2>Array: <span id="arrayDisplay">[]</span></h2>
+            <h3 id="outputMessage"></h3>
+        </div>
+    </div>
+
+    <script>
+        let array = [];
+
+        // Function to create array
+        function createArray() {
+            const arrayInput = document.getElementById('createArrayInput').value;
+            if (arrayInput) {
+                array = arrayInput.split(',').map(item => item.trim()); // Create array from input
+                displayArray();
+                document.getElementById('outputMessage').innerText = `Array created: [${array}]`;
+            } else {
+                document.getElementById('outputMessage').innerText = 'Please enter array elements.';
+            }
+        }
+
+        // Function to display the array
+        function displayArray() {
+            document.getElementById('arrayDisplay').innerText = `[${array}]`;
+        }
+
+        // Push Element to the array
+        function pushElement() {
+            const arrayInput = document.getElementById('arrayInput').value;
+            if (arrayInput) {
+                array.push(arrayInput);
+                displayArray();
+                document.getElementById('outputMessage').innerText = `Element '${arrayInput}' pushed to array. Updated Array: [${array}]`;
+            } else {
+                document.getElementById('outputMessage').innerText = 'Please enter an element to push.';
+            }
+        }
+
+        // Pop Element from the array
+        function popElement() {
+            if (array.length > 0) {
+                const poppedElement = array.pop();
+                displayArray();
+                document.getElementById('outputMessage').innerText = `Element '${poppedElement}' popped from array. Updated Array: [${array}]`;
+            } else {
+                document.getElementById('outputMessage').innerText = 'Array is empty.';
+            }
+        }
+
+        // Unshift (Add to the beginning) Element
+        function unshiftElement() {
+            const arrayInput = document.getElementById('arrayInput').value;
+            if (arrayInput) {
+                array.unshift(arrayInput);
+                displayArray();
+                document.getElementById('outputMessage').innerText = `Element '${arrayInput}' unshifted to the beginning of array. Updated Array: [${array}]`;
+            } else {
+                document.getElementById('outputMessage').innerText = 'Please enter an element to unshift.';
+            }
+        }
+
+        // Shift (Remove from the beginning) Element
+        function shiftElement() {
+            if (array.length > 0) {
+                const shiftedElement = array.shift();
+                displayArray();
+                document.getElementById('outputMessage').innerText = `Element '${shiftedElement}' shifted from the beginning of array. Updated Array: [${array}]`;
+            } else {
+                document.getElementById('outputMessage').innerText = 'Array is empty.';
+            }
+        }
+
+        // Slice the array
+        function sliceArray() {
+            const start = parseInt(prompt("Enter start index for slice (0-based):"), 10);
+            const end = parseInt(prompt("Enter end index for slice (0-based, non-inclusive):"), 10);
+            if (!isNaN(start) && !isNaN(end)) {
+                const slicedArray = array.slice(start, end);
+                document.getElementById('outputMessage').innerText = `Sliced Array: [${slicedArray}] from indices ${start} to ${end}. Original Array: [${array}]`;
+            } else {
+                document.getElementById('outputMessage').innerText = 'Invalid input for slicing.';
+            }
+        }
+
+        // Splice the array
+        function spliceArray() {
+            const start = parseInt(prompt("Enter the start index for splice (0-based):"), 10);
+            const deleteCount = parseInt(prompt("Enter number of elements to delete:"), 10);
+            const elementsToAdd = prompt("Enter element(s) to add (comma-separated) or leave blank:");
+            const newElements = elementsToAdd ? elementsToAdd.split(',').map(item => item.trim()) : [];
+            if (!isNaN(start) && !isNaN(deleteCount)) {
+                const splicedArray = array.splice(start, deleteCount, ...newElements);
+                displayArray();
+                document.getElementById('outputMessage').innerText = `Spliced out: [${splicedArray}] and added: [${newElements}] starting from index ${start}. Updated Array: [${array}]`;
+            } else {
+                document.getElementById('outputMessage').innerText = 'Invalid input for splicing.';
+            }
+        }
+    </script>
+
+</body>
+</html>
